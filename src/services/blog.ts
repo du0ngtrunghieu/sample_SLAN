@@ -2,10 +2,6 @@ import { BlogModel, ListBlog } from "@/interfaces";
 import axios from "axios";
 const baseApiUrl = process.env.VUE_APP_API_URL;
 
-interface ApiResponse<T> {
-  data: T;
-}
-
 type Callbacks<T> = {
   onSuccess: (a: T) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

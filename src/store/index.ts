@@ -48,6 +48,11 @@ export default createStore({
     deletePost: (state, id) =>
       (state.posts = state.posts.filter((post) => post.id !== id)),
     setPosts: (state, payload) => {
+      //fake calculation pagination when search
+      if (state.meta.search !== "") {
+        state.meta.total = payload.length;
+        state.meta.totalPages = 1;
+      }
       state.posts = payload;
     },
     setDetailsPost: (state, payload) => {
