@@ -4,6 +4,7 @@
       <div class="d-flex flex-row align-items-center">
         <div class="flex-shrink-0 ms-5">
           <img
+            id="img-thumbnail"
             class="rounded-3 img-fluid"
             v-lazyload="details.image"
             alt="..."
@@ -13,9 +14,11 @@
         </div>
         <div class="d-flex align-items-start flex-column mb-3 mx-3">
           <router-link :to="'/edit/' + details.id">
-            <div class="mb-auto p-2 fs-4 fw-bold">{{ details.title }}</div>
+            <div id="title" class="mb-auto p-3 fs-4 fw-bold">
+              {{ details.title }}
+            </div>
           </router-link>
-          <div class="p-2">
+          <div class="p-2" id="content">
             {{ details.content }}
           </div>
         </div>

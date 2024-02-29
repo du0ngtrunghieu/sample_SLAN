@@ -31,7 +31,6 @@ export const getAllBlog = async (
   } catch (error) {
     // Handle error
     args.onFailure(error);
-    console.error(error);
   }
 };
 
@@ -46,6 +45,5 @@ export const getDetailsBlogById = async (
   } catch (error) {
     // Handle error
     arg.onFailure(error);
-    console.error(error);
   }
 };
