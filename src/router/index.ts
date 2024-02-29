@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+const baseUrl = process.env.VUE_BUILD_ADDRESS;
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
+    path: `/`,
     name: "home",
     component: HomeView,
   },
