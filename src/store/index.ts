@@ -1,5 +1,5 @@
 import { BlogModel, ListBlog } from "@/interfaces";
-import { getAllBlog } from "@/services/blog";
+import { getAllBlog, getDetailsBlogById } from "@/services/blog";
 import { createStore } from "vuex";
 
 const PAGE_DEFAULT = 1;
@@ -26,6 +26,7 @@ export default createStore({
   },
   mutations: {
     updatePost: (state, payload) => {
+      //call api
       const index = state.posts.findIndex((post) => post.id === payload.id);
       if (index !== 1) {
         state.posts.splice(index, 1, payload);
@@ -37,11 +38,11 @@ export default createStore({
     deletePost: (state, id) =>
       (state.posts = state.posts.filter((post) => post.id !== id)),
     setPosts: (state, payload) => {
-      console.log(payload);
       state.posts = payload;
     },
     setDetailsPost: (state, payload) => {
-      console.log(payload);
+      state.postDetails = {} as BlogModel;
+      state.postDetails = payload;
     },
     setMetaData: (state, payload) => {
       state.meta = payload;
@@ -78,6 +79,16 @@ export default createStore({
     },
     setMetaData: (context, payload) => {
       context.commit("setMetaData", payload);
+    },
+    getDetailsBlogById: async (context, payload) => {
+      await getDetailsBlogById(payload.id, {
+        onSuccess(a) {
+          context.commit("setDetailsPost", a);
+        },
+        onFailure(a) {
+          //TODO: error
+        },
+      });
     },
   },
   modules: {},

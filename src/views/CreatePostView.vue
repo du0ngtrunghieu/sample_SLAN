@@ -1,6 +1,6 @@
 <template>
   <div class="container mt-5">
-    <h2>Create Post</h2>
+    <h2>{{ !idRef ? "Create post" : "Update post" }}</h2>
     <form @submit.prevent="submitForm">
       <!-- Title Input -->
       <div class="mb-3">
@@ -51,6 +51,7 @@ import store from "@/store";
 export default {
   name: "PostForm",
   data() {
+    const idRef = ref(null);
     return {
       formData: {
         createdAt: new Date().toISOString(),
@@ -59,7 +60,13 @@ export default {
         content: "",
         id: "",
       },
+      idRef,
     };
+  },
+  computed: {
+    getDetailsPost: function () {
+      return this.$store.state.postDetails;
+    },
   },
   methods: {
     submitForm() {
@@ -73,19 +80,43 @@ export default {
         return;
       }
 
-      this.formData.id = this.generateRandomId();
-      store.dispatch("createPost", this.formData);
+      if (this.idRef !== null) {
+        store.dispatch("updatePost", this.formData);
+        alert("Update Successfully");
+      } else {
+        this.formData.id = this.generateRandomId();
+        store.dispatch("createPost", this.formData);
 
-      // Reset form data after submission
-      this.formData.title = "";
-      this.formData.image = "";
-      this.formData.content = "";
+        // Reset form data after submission
+        this.formData.title = "";
+        this.formData.image = "";
+        this.formData.content = "";
 
-      alert("Create Successfully");
+        alert("Create Successfully");
+      }
     },
     generateRandomId() {
       // Generate a random ID
       return Math.random().toString(36).substr(2, 9);
+    },
+  },
+  mounted() {
+    const itemId = this.$route.params.id;
+    this.idRef = itemId;
+    if (itemId) {
+      //get details
+      store.dispatch("getDetailsBlogById", { id: itemId });
+    }
+  },
+  watch: {
+    getDetailsPost: {
+      handler: function (newVal, oldVal) {
+        if (newVal !== oldVal && Object.keys(newVal)) {
+          //update
+          Object.assign(this.formData, newVal);
+        }
+      },
+      deep: true,
     },
   },
 };

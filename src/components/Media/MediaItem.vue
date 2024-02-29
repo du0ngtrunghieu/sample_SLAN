@@ -12,7 +12,9 @@
           />
         </div>
         <div class="d-flex align-items-start flex-column mb-3 mx-3">
-          <div class="mb-auto p-2 fs-4 fw-bold">{{ details.title }}</div>
+          <router-link :to="'/edit/' + details.id">
+            <div class="mb-auto p-2 fs-4 fw-bold">{{ details.title }}</div>
+          </router-link>
           <div class="p-2">
             {{ details.content }}
           </div>

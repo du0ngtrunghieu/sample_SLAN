@@ -40,10 +40,8 @@ export const getDetailsBlogById = async (
   arg: Callbacks<BlogModel>
 ) => {
   try {
-    const response = await axios.get<ApiResponse<BlogModel>>(
-      `${baseApiUrl}/blog/${id}`
-    );
-    const data = response.data.data;
+    const response = await axios.get<BlogModel>(`${baseApiUrl}/blogs/${id}`);
+    const data = response.data;
     arg.onSuccess(data);
   } catch (error) {
     // Handle error

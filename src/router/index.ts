@@ -12,12 +12,17 @@ export const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
-    path: "/create-new",
+    path: "/post",
     component: () => import("@/layouts/Default.vue"),
     children: [
       {
         path: "",
         name: "Create new post",
+        component: () => import("@/views/CreatePostView.vue"),
+      },
+      {
+        path: "/edit/:id",
+        name: "Edit post",
         component: () => import("@/views/CreatePostView.vue"),
       },
     ],
