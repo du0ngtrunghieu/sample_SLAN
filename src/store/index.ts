@@ -6,6 +6,7 @@ const PAGE_DEFAULT = 1;
 const LIMIT_DEFAULT = 5;
 export default createStore({
   state: {
+    isLoading: false,
     posts: [] as ListBlog,
     postDetails: {} as BlogModel,
     meta: {
@@ -23,8 +24,17 @@ export default createStore({
     getPosts: (state) => state.posts,
     getPostDetails: (state) => state.postDetails,
     getMeta: (state) => state.meta,
+    isLoading(state) {
+      return state.isLoading;
+    },
   },
   mutations: {
+    showLoading(state) {
+      state.isLoading = true;
+    },
+    hideLoading(state) {
+      state.isLoading = false;
+    },
     updatePost: (state, payload) => {
       //call api
       const index = state.posts.findIndex((post) => post.id === payload.id);
@@ -49,6 +59,12 @@ export default createStore({
     },
   },
   actions: {
+    showLoading({ commit }) {
+      commit("showLoading");
+    },
+    hideLoading({ commit }) {
+      commit("hideLoading");
+    },
     createPost: (context, payload) => {
       context.commit("createPost", payload);
     },
@@ -59,6 +75,7 @@ export default createStore({
       context.commit("updatePost", payload);
     },
     loadPosts: async (context) => {
+      context.state.isLoading = true;
       await getAllBlog(
         context.state.meta.page,
         context.state.meta.limit,
@@ -68,11 +85,13 @@ export default createStore({
         {
           onSuccess(a) {
             if (a.length >= 0) {
+              context.state.isLoading = false;
               context.commit("setPosts", a);
             }
           },
           onFailure(error) {
             //TODO : Set error message
+            context.state.isLoading = false;
           },
         }
       );
@@ -81,12 +100,15 @@ export default createStore({
       context.commit("setMetaData", payload);
     },
     getDetailsBlogById: async (context, payload) => {
+      context.state.isLoading = true;
       await getDetailsBlogById(payload.id, {
         onSuccess(a) {
+          context.state.isLoading = false;
           context.commit("setDetailsPost", a);
         },
         onFailure(a) {
           //TODO: error
+          context.state.isLoading = false;
         },
       });
     },

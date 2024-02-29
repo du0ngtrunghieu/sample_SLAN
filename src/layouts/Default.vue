@@ -6,6 +6,7 @@
   </header>
 
   <main class="container">
+    <LoadingOverlay v-if="loading" />
     <router-view />
   </main>
 
@@ -15,7 +16,14 @@
 </template>
 
 <script lang="ts" setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 import Nav from "@/components/Nav.vue";
 import Heads from "@/components/Heads.vue";
 import Footer from "@/components/Footer.vue";
+import LoadingOverlay from "@/components/LoadingOverlay/index.vue";
+
+const store = useStore();
+const loading = computed(() => store.getters.isLoading);
 </script>
