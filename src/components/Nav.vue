@@ -121,7 +121,7 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 import { routes } from "@/router";
 
-const siteUrl = import.meta.env.VITE_BUILD_ADDRESS;
+const siteUrl = "/";
 const router = useRouter();
 const activeRoute = computed(() => router.currentRoute.value.path);
 const isActive = (path: string) => path === activeRoute.value;
