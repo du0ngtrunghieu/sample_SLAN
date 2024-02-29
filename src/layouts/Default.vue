@@ -5,7 +5,7 @@
     <Heads>Blog List</Heads>
   </header>
 
-  <main class="container flex-shrink-0 mb-4">
+  <main class="container">
     <router-view />
   </main>
 

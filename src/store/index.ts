@@ -3,23 +3,26 @@ import { getAllBlog } from "@/services/blog";
 import { createStore } from "vuex";
 
 const PAGE_DEFAULT = 1;
-const LIMIT_DEFAULT = 10;
+const LIMIT_DEFAULT = 5;
 export default createStore({
   state: {
     posts: [] as ListBlog,
     postDetails: {} as BlogModel,
     meta: {
       page: PAGE_DEFAULT,
-      total: null,
+      total: 52, //FAKE total - api not response
       limit: LIMIT_DEFAULT,
       sortBy: "id",
       order: "asc",
       search: "",
+      totalPages: 5,
+      trigger: false,
     },
   },
   getters: {
     getPosts: (state) => state.posts,
     getPostDetails: (state) => state.postDetails,
+    getMeta: (state) => state.meta,
   },
   mutations: {
     updatePost: (state, payload) => {
@@ -29,7 +32,7 @@ export default createStore({
       }
     },
     createPost: (state, payload) => {
-      state.posts.unshift(payload);
+      state.posts.unshift({ ...payload });
     },
     deletePost: (state, id) =>
       (state.posts = state.posts.filter((post) => post.id !== id)),
@@ -39,6 +42,9 @@ export default createStore({
     },
     setDetailsPost: (state, payload) => {
       console.log(payload);
+    },
+    setMetaData: (state, payload) => {
+      state.meta = payload;
     },
   },
   actions: {
@@ -69,6 +75,9 @@ export default createStore({
           },
         }
       );
+    },
+    setMetaData: (context, payload) => {
+      context.commit("setMetaData", payload);
     },
   },
   modules: {},
