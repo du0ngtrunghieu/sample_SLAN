@@ -7,6 +7,8 @@ WORKDIR /app
 # Install pnpm globally
 RUN npm install -g pnpm
 
+RUN npm i --save-dev @types/node
+
 # Copy package.json and pnpm-lock.yaml to the working directory
 COPY package.json pnpm-lock.yaml ./
 
