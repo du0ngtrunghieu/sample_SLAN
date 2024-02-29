@@ -3,7 +3,7 @@ import { getAllBlog, getDetailsBlogById } from "@/services/blog";
 import { createStore } from "vuex";
 
 const PAGE_DEFAULT = 1;
-const LIMIT_DEFAULT = 5;
+const LIMIT_DEFAULT = 10;
 export default createStore({
   state: {
     isLoading: false,

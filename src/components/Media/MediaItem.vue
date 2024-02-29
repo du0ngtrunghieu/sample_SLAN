@@ -4,8 +4,8 @@
       <div class="d-flex flex-row align-items-center">
         <div class="flex-shrink-0 ms-5">
           <img
-            class="rounded-3"
-            :src="details.image"
+            class="rounded-3 img-fluid"
+            v-lazyload="details.image"
             alt="..."
             width="200"
             height="140"
@@ -33,6 +33,29 @@ import { PropType } from "vue";
 import { Options, Vue } from "vue-class-component";
 
 @Options({
+  directives: {
+    lazyload: {
+      mounted(el, binding) {
+        const options = {
+          root: null,
+          rootMargin: "0px",
+          threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const lazyImage = entry.target as any;
+              lazyImage.src = binding.value;
+              observer.unobserve(lazyImage);
+            }
+          });
+        }, options);
+
+        observer.observe(el);
+      },
+    },
+  },
   props: {
     details: {
       type: Object as PropType<BlogModel>,
