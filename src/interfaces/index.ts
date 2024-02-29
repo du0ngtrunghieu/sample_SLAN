@@ -36,3 +36,8 @@ export interface Data {
   content: string;
   image?: string;
 }
+
+export interface pageParams {
+  page?: number;
+  limit?: number;
+}
