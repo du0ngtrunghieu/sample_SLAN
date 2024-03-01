@@ -2,7 +2,7 @@
   <div>
     <div class="col-md-12 p-card p-2 rounded-3 px-3 bg-gray-900">
       <div class="d-flex flex-row align-items-center">
-        <div class="flex-shrink-0 ms-5">
+        <div class="flex-shrink-0">
           <img
             id="img-thumbnail"
             class="rounded-3 img-fluid"
