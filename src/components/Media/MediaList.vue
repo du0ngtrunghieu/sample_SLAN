@@ -62,11 +62,12 @@ import store from "@/store";
       store.dispatch("loadPosts");
     },
 
-    handleSortBy(value: string) {
+    handleSortBy(value: string, order: string) {
       const payloadMeta = Object.assign({}, store.getters.getMeta);
       store.dispatch("setMetaData", {
         ...payloadMeta,
         sortBy: value,
+        order: order,
       });
       store.dispatch("loadPosts");
     },

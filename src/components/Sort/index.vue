@@ -10,9 +10,18 @@
       Sort By
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <li class="dropdown-item" @click="sortBy('id')">ID</li>
-      <li class="dropdown-item" @click="sortBy('title')">Title</li>
-      <li class="dropdown-item" @click="sortBy('createdAt')">Created Date</li>
+      <li class="dropdown-item" @click="sortBy('id', 'asc')">ID (Asc)</li>
+      <li class="dropdown-item" @click="sortBy('title', 'asc')">Title (Asc)</li>
+      <li class="dropdown-item" @click="sortBy('createdAt', 'asc')">
+        Created Date (Asc)
+      </li>
+      <li class="dropdown-item" @click="sortBy('id', 'desc')">ID (Desc)</li>
+      <li class="dropdown-item" @click="sortBy('title', 'desc')">
+        Title (Desc)
+      </li>
+      <li class="dropdown-item" @click="sortBy('createdAt', 'desc')">
+        Created Date (Desc)
+      </li>
     </ul>
   </div>
 </template>
@@ -25,9 +34,9 @@ export default {
   setup(props, { emit }) {
     const sortByField = ref(""); // Initially no sorting
 
-    const sortBy = (field) => {
+    const sortBy = (field, order) => {
       sortByField.value = field;
-      emit("sortBy", field);
+      emit("sortBy", field, order);
     };
 
     return {
